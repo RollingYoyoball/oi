@@ -1,0 +1,69 @@
+下载。。gcc、gdb、tmux
+
+.minttyrc里面
+
+ForegroundColour=235,219,178
+BackgroundColour=29,32,33
+CursorColour=253,157,79
+Black=40,40,40
+BoldBlack=146,131,116
+Red=204,36,29
+BoldRed=251,73,52
+Green=152,151,26
+BoldGreen=184,187,38
+Yellow=215,153,33
+BoldYellow=250,189,47
+Blue=69,133,136
+BoldBlue=131,165,152
+Magenta=177,98,134
+BoldMagenta=211,134,155
+Cyan=104,157,106
+BoldCyan=142,192,124
+White=168,153,132
+BoldWhite=235,219,178
+
+
+tmux分屏配置
+.tmux.conf
+setw -g mode-keys vi
+unbind C-b
+set -g prefix C-a
+set -g status off
+set -s escape-time 0
+
+bind -n M-h select-pane -L
+bind -n M-l select-pane -R
+bind -n M-j select-pane -D
+bind -n M-k select-pane -U
+bind -n M-H resize-pane -L 5
+bind -n M-L resize-pane -R 5
+bind -n M-J resize-pane -D 5
+bind -n M-K resize-pane -U 5
+
+bind -n M-o split-window -h
+bind -n M-O split-window -v
+
+bind -n M-x kill-pane
+
+
+vim格式配置
+.vimrc
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set backspace=2
+set number
+set ai
+set cindent
+set wildmenu
+set hlsearch
+syntax on
+imap ` <Esc>
+nmap ` <Esc>
+vmap ` <Esc>
+cmap ` <Esc>
+nmap [ zo
+nmap ] zc
+set fdm=marker
+
+colorscheme desert
