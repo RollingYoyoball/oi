@@ -1,0 +1,28 @@
+void build(){
+    stk[stk[0]=1]=1;
+    for(int i=1;i<=k;i++){
+        int tmp=lca(stk[stk[0]],h[i]);
+        if(tmp!=stk[stk[0]]){
+            while(stk[0]>1){
+                if(dfn[stk[stk[0]-1]]>dfn[tmp]){
+                    adde(stk[stk[0]-1],stk[stk[0]],0);
+                    stk[0]--;
+                }else if(stk[stk[0]-1]==tmp){
+                    adde(tmp,stk[stk[0]],0);
+                    stk[0]--;
+                    break;
+                }else if(dfn[stk[stk[0]-1]]<dfn[tmp]){
+                    adde(tmp,stk[stk[0]],0);
+                    stk[0]--;
+                    stk[++stk[0]]=tmp;
+                    break;
+                }
+            }
+        }
+        stk[++stk[0]]=h[i];
+    }	
+    while(stk[0]>1){
+        adde(stk[stk[0]-1],stk[stk[0]],0);
+        stk[0]--;
+    }
+}

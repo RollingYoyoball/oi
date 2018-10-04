@@ -1,0 +1,74 @@
+1
+void cdq(int l,int r){
+    if(l==r) return;    
+    int mid=(l+r)>>1;
+    cdq(l,mid);
+    cdq(mid+1,r);
+    sort(g+l,g+mid+1,cmpX);
+    sort(g+mid+1,g+r+1,cmpX);
+    bit.reset();
+    for(int i=l,j=mid+1;j<=r;j++){
+        while(i<=mid&&g[i].x<=g[j].x){
+            bit.add(g[i].y,g[i].ads,0);
+            i++;
+        }
+        g[j].ans+=bit.que(g[j].y);
+    }
+}
+
+
+2
+int cdq(int l,int r)
+{
+    if (l>=r) return 0;
+    int mid=l+r>>1,tot1=l-1,tot2=mid;
+    for (int i=l;i<=r;++i)
+    {
+        if (a1[i].t<=mid)
+        {
+            cdqrec[++tot1]=a1[i];
+            if (!a1[i].op) insert(a1[i].y,1);
+        }
+        else
+        {
+            cdqrec[++tot2]=a1[i];
+            if (a1[i].op) res[a1[i].id]+=query(a1[i].y)*a1[i].flag;
+        }
+    }
+    for (int i=l;i<=r;++i)
+        if (!a1[i].op&&a1[i].t<=mid)
+            insert(a1[i].y,-1);
+    for (int i=l;i<=r;++i) a1[i]=cdqrec[i];
+    cdq(l,mid);
+    cdq(mid+1,r);
+}
+
+
+3(best)
+void cdq(int l,int r,int d){
+    if(l==r) return;
+    int mid=(l+r)>>1;
+    cdq(l,mid,d);
+    cdq(mid+1,r,d);
+    for(int i=l,j=mid+1;j<=r;j++){
+        while(i<=mid&&f[i].x<=f[j].x){
+            if(f[i].opt==1&&f[i].val<=d)
+                bit.add(f[i].y,1);
+            i++;
+        }
+        if(f[j].opt==2)
+            f[j].ans+=bit.que(f[j].y);
+    }
+    for(int i=l;i<=mid&&f[i].x<=f[r].x;i++)
+        if(f[i].opt==1&&f[i].val<=d)
+            bit.add(f[i].y,-1);
+    int tot=0;
+    int i=l,j=mid+1;
+    for(;i<=mid&&j<=r;)
+        if(f[i].x<=f[j].x) 
+            t[++tot]=f[i++];
+        else t[++tot]=f[j++];
+    while(i<=mid) t[++tot]=f[i++];
+    while(j<=r) t[++tot]=f[j++];
+    for(i=l;i<=r;i++) f[i]=t[i-l+1];
+}

@@ -1,0 +1,26 @@
+namespace Fast{/*{{{*/
+	const int LEN=10000000;
+	char inp[LEN],outp[LEN];
+	int tmp[20];
+	int inpos,outpos;
+	void init(){
+		fread(inp,1,LEN,stdin);
+		inpos=0; outpos=0;
+	}
+	char GetChar(){return inp[inpos++];}
+	int read(){
+		int ret=0; char ch=GetChar();
+		while (ch<'0'||ch>'9') ch=GetChar();
+		while ('0'<=ch&&ch<='9') ret=ret*10+ch-'0',ch=GetChar();
+		return ret;
+	}
+	void PutChar(char ch){outp[outpos++]=ch;}
+	void print(int x){
+		int pos=0;
+		if (!x) tmp[++pos]=0;
+		else
+			while (x) tmp[++pos]=x%10,x/=10;
+		for (int i=pos;i>=1;--i) PutChar(tmp[i]+'0');
+	}
+	void Print(){fwrite(outp,1,outpos,stdout);}
+}/*}}}*/

@@ -1,0 +1,80 @@
+//reference
+#include <cstdio>
+#include <algorithm>
+#define lowbit(x) (x&-x)
+ 
+using namespace std;
+ 
+int sumv[100005];
+ 
+void add(int x,int num) {
+  for(;x<=100000;x+=lowbit(x)) sumv[x]+=num;
+}
+ 
+int sum(int x) {
+  int s=0;
+  for(;x;x-=lowbit(x)) s+=sumv[x];
+  return s;
+}
+ 
+struct Data {
+  int l,r,k,id;
+  Data() {}
+  Data(int a,int b,int c,int d):l(a),r(b),k(c),id(d) {}
+};
+ 
+Data a[200005],q1[200005],q2[200005];
+int ans[50005],num[100005];
+ 
+void solve(int l,int r,int head,int tail) {
+  if (head>tail) return;
+  if (l==r) {
+    for(int i=head;i<=tail;i++)
+      if (a[i].id) ans[a[i].id]=l;
+    return;
+  }
+  int m=((l+r)>>1);
+  int lx=0,rx=0;
+  for(int i=head;i<=tail;i++)
+    if (!a[i].id) {
+        if (a[i].k<=m) {
+            add(a[i].l,1);
+            q1[++lx]=a[i];
+        }
+        else q2[++rx]=a[i];
+    }
+    else {
+        int s=sum(a[i].r)-sum(a[i].l-1);
+        if (s>=a[i].k) q1[++lx]=a[i];
+        else {
+            a[i].k-=s;
+            q2[++rx]=a[i];
+        }
+    }
+  for(int i=head;i<=tail;i++)
+    if (!a[i].id&&a[i].k<=m) add(a[i].l,-1);
+  for(int i=head;i<head+lx;i++) a[i]=q1[i-head+1];
+  for(int i=head+lx;i<=tail;i++) a[i]=q2[i-head-lx+1];
+  solve(l,m,head,head+lx-1);
+  solve(m+1,r,head+lx,tail);
+}
+ 
+int main() {
+  int n,m;
+  scanf("%d%d",&n,&m);
+  int maxx=-0x7fffffff,minx=0x7fffffff;
+  for(int i=1;i<=n;i++) {
+    scanf("%d",&num[i]);
+    maxx=max(maxx,num[i]);
+    minx=min(minx,num[i]);
+    a[i]=Data(i,i,num[i],0);
+  }
+  for(int i=1;i<=m;i++) {
+    int x,y,z;
+    scanf("%d%d%d",&x,&y,&z);
+    a[n+i]=Data(x,y,z,i);
+  }
+  solve(minx,maxx,1,n+m);
+  for(int i=1;i<=m;i++) printf("%d\n",ans[i]);
+  return 0;
+}
