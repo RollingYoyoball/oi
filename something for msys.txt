@@ -1,6 +1,6 @@
-下载。。gcc、gdb、tmux
+涓嬭浇銆傘�俫cc銆乬db銆乼mux銆乨iffutils
 
-.minttyrc里面
+.minttyrc閲岄潰
 
 ForegroundColour=235,219,178
 BackgroundColour=29,32,33
@@ -23,7 +23,7 @@ White=168,153,132
 BoldWhite=235,219,178
 
 
-tmux分屏配置
+tmux鍒嗗睆閰嶇疆
 .tmux.conf
 setw -g mode-keys vi
 unbind C-b
@@ -46,7 +46,7 @@ bind -n M-O split-window -v
 bind -n M-x kill-pane
 
 
-vim格式配置
+vim鏍煎紡閰嶇疆
 .vimrc
 set tabstop=4
 set softtabstop=4
